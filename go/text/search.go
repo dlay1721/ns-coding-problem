@@ -19,6 +19,7 @@ type TextSearcher struct {
 func IsRunningTest() bool {
 	for _, arg := range os.Args {
 		if strings.HasPrefix(arg, "-test.") {
+			fmt.Print(arg)
 			return true
 		}
 	}

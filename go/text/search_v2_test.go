@@ -1,6 +1,7 @@
 package text
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -36,5 +37,16 @@ func TestV2Search(t *testing.T) {
 			[]string{},
 			results,
 		)
+	})
+
+	t.Run("ignore special characters in context", func(t *testing.T) {
+		ts, err := NewSearcher("../files/Siddhartha.txt")
+		assert.NoError(t, err)
+		results := ts.Search("start", 10)
+		for _, result := range results {
+			if strings.Contains(result, "*") {
+				t.Errorf("String should not contain the substring '%s'", "*")
+			}
+		}
 	})
 }
