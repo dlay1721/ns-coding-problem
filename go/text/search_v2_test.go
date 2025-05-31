@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// Unit tests for search: DO NOT MODIFY THIS FILE
+// Unit tests for search, expanded
 
 func TestV2Search(t *testing.T) {
 	t.Run("high frequency words", func(t *testing.T) {

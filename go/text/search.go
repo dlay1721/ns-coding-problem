@@ -9,7 +9,6 @@ import (
 )
 
 // TextSearcher structure
-// TODO: add in objects/data structures required by the Search function
 type TextSearcher struct {
 	Text       []string
 	Dictionary map[string][]int
@@ -27,7 +26,6 @@ func IsRunningTest() bool {
 }
 
 // NewSearcher returns a TextSearcher from the given file
-// TODO: Load/process the file so that the Search function work
 func NewSearcher(filePath string) (*TextSearcher, error) {
 	textSearcher := TextSearcher{
 		Text:       []string{},
@@ -54,7 +52,7 @@ func NewSearcher(filePath string) (*TextSearcher, error) {
 	index := 0
 	for scanner.Scan() {
 		line := scanner.Text()
-		// fmt.Println(line)
+
 		// string split the line on spaces (to preserve punctuatation/formatting)
 		splitLine := strings.Split(line, " ")
 		for _, word := range splitLine {
@@ -69,9 +67,6 @@ func NewSearcher(filePath string) (*TextSearcher, error) {
 			}
 		}
 	}
-
-	// fmt.Println(textSearcher.Dictionary)
-	// fmt.Println(textSearcher.Text)
 
 	if err := scanner.Err(); err != nil {
 		fmt.Println("Error reading file:", err)
@@ -114,14 +109,11 @@ func sanitizeString(word string) string {
 // We will hold another string array in memory for the text file itself (both of these structs will be created
 // in the initializing funct). Therefore, once we run the searching algo, we can do a quick loopup of the word
 // since we will know where the word is based on the index in the map
-
-// TODO: Implement this function to pass the tests in search_test.go
 func (ts *TextSearcher) Search(word string, context int) []string {
 	search := []string{}
 	// Search the map for the sanatized string, then create a window around it:
 	//     map(index-context:index+context)
 	// We need to ensure that there is no range out of bounds error
-	// fmt.Println(ts.Dictionary[sanitizeString(word)])
 	for _, index := range ts.Dictionary[sanitizeString(word)] {
 		leftWindow := index - context
 		if leftWindow < 0 {
@@ -131,8 +123,7 @@ func (ts *TextSearcher) Search(word string, context int) []string {
 		if rightWindow > len(ts.Text) {
 			rightWindow = len(ts.Text)
 		}
-		// fmt.Println(index)
-		// fmt.Println(ts.Text[leftWindow:rightWindow])
+
 		search = append(search, strings.Join(ts.Text[leftWindow:rightWindow], " "))
 	}
 
